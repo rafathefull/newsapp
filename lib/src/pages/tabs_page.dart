@@ -48,6 +48,7 @@ class _Paginas extends StatelessWidget {
     final navegacionModel = Provider.of<_NavegacionModel>(context);
 
     return PageView(
+      controller: navegacionModel.pageController,
       onPageChanged: (value) => navegacionModel.paginaActual = value,
       children: [
         Container(
@@ -61,13 +62,19 @@ class _Paginas extends StatelessWidget {
 
 class _NavegacionModel with ChangeNotifier {
   int _paginaActual = 0;
+  PageController _pageController = new PageController();
 
   int get paginaActual => this._paginaActual;
   set paginaActual(int valor) {
     this._paginaActual = valor;
+    // Indicamos la pagina a traves de su controlador
+    this._pageController.animateToPage(valor,
+        duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
     // Notificar a los widgets que la pagina a cambiado
     notifyListeners();
   }
+
+  PageController get pageController => this._pageController;
 
   @override
   void dispose() {

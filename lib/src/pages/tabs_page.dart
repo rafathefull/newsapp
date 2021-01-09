@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/src/pages/tab1_page.dart';
 import 'package:provider/provider.dart';
 
 class TabsPage extends StatelessWidget {
@@ -31,8 +32,9 @@ class _Navegacion extends StatelessWidget {
         onTap: (value) => navegacionModel.paginaActual = value,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline), label: 'Text 1'),
-          BottomNavigationBarItem(icon: Icon(Icons.public), label: 'Text 2'),
+              icon: Icon(Icons.person_outline), label: 'Para tí'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.public), label: 'Encabezados'),
         ]);
   }
 }
@@ -50,12 +52,7 @@ class _Paginas extends StatelessWidget {
     return PageView(
       controller: navegacionModel.pageController,
       onPageChanged: (value) => navegacionModel.paginaActual = value,
-      children: [
-        Container(
-          color: Colors.red,
-        ),
-        Container(color: Colors.green)
-      ],
+      children: [Tab1Page(), Container(color: Colors.green)],
     );
   }
 }
@@ -69,7 +66,7 @@ class _NavegacionModel with ChangeNotifier {
     this._paginaActual = valor;
     // Indicamos la pagina a traves de su controlador
     this._pageController.animateToPage(valor,
-        duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
+        duration: Duration(milliseconds: 100), curve: Curves.bounceIn);
     // Notificar a los widgets que la pagina a cambiado
     notifyListeners();
   }

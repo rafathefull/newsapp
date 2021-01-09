@@ -73,10 +73,4 @@ class _NavegacionModel with ChangeNotifier {
   }
 
   PageController get pageController => this._pageController;
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
 }

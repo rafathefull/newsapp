@@ -6,7 +6,14 @@ import 'package:provider/provider.dart';
 import 'package:newsapp/src/services/news_service.dart';
 import 'package:newsapp/src/utils/stringExtension.dart';
 
-class Tab2Page extends StatelessWidget {
+class Tab2Page extends StatefulWidget {
+  @override
+  _Tab2PageState createState() => _Tab2PageState();
+}
+
+// Nota; AutomaticKeepAliveClientMixin nos permite mantener el estado dentro de la lista
+class _Tab2PageState extends State<Tab2Page>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     final newsService = Provider.of<NewsService>(context);
@@ -30,6 +37,10 @@ class Tab2Page extends StatelessWidget {
       ),
     );
   }
+
+  // Esto permite mantener el estado si cambiamos de pagina y volvemos a ella
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _ListaCategorias extends StatelessWidget {
@@ -67,7 +78,7 @@ class _ListaCategorias extends StatelessWidget {
 }
 
 class _categoryButton extends StatelessWidget {
-  final Category categoria;
+  final Categoria categoria;
 
   const _categoryButton({this.categoria});
 

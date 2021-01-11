@@ -10,17 +10,18 @@ final _apikey = '400716e1b12149a786c3b6a28f628e81';
 
 class NewsService with ChangeNotifier {
   String country = 'us';
-  String _selectedCategory = 'business';
+  String _selectedCategory = 'general';
+  String _seletedSource = '';
 
-  bool _isLoading = true; // Si esta cargando el segundo tab2
+  bool _isLoading = false; // Si esta cargando el segundo tab2
 
   List<SourceNews> _sourceList = [];
 
   List<Article> headlines = [];
 
   List<Categoria> categories = [
-    Categoria(FontAwesomeIcons.building, 'business'),
     Categoria(FontAwesomeIcons.addressCard, 'general'),
+    Categoria(FontAwesomeIcons.building, 'business'),
     Categoria(FontAwesomeIcons.headSideVirus, 'health'),
     Categoria(FontAwesomeIcons.vials, 'science'),
     Categoria(FontAwesomeIcons.volleyballBall, 'sports'),
@@ -35,6 +36,7 @@ class NewsService with ChangeNotifier {
     categories.forEach((element) {
       this.categoryArticles[element.name] = [];
     });
+    this.getArticlesByCategory(this._selectedCategory);
     this.getSourceList();
   }
 
@@ -55,7 +57,16 @@ class NewsService with ChangeNotifier {
   List<SourceNews> get sourceList => this._sourceList;
 
   getTopHeadLines() async {
-    final url = '$_url_news/top-headlines?country=$country&apiKey=$_apikey';
+    var url = '$_url_news/top-headlines?apiKey=$_apikey';
+
+    // No se puede mezclar country con source en la peticion.
+    //final url = '$_url_news/top-headlines?country=$country&apiKey=$_apikey';
+    if (_seletedSource.isEmpty) {
+      url += '&country=$country';
+    } else {
+      url += '&sources=$_seletedSource';
+    }
+
     final resp = await http.get(url);
     final newsResponse = newsResponseFromJson(resp.body);
 
@@ -78,6 +89,14 @@ class NewsService with ChangeNotifier {
     this.categoryArticles[category].addAll(newsResponse.articles);
     this._isLoading = false;
     notifyListeners(); // Notificamos a quien este en la escucha.
+  }
+
+  get selectedSource => this._seletedSource;
+
+  set selectedSource(String valor) {
+    this._seletedSource = valor;
+    this.headlines.clear();
+    getTopHeadLines();
   }
 
   // Seleccionamos las fuentes que tenemos

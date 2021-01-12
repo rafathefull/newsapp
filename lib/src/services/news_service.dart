@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:newsapp/src/models/news_source_model.dart';
 
 final _url_news = 'https://newsapi.org/v2';
-final _apikey = '400716e1b12149a786c3b6a28f628e81';
+final _apikey = 'TODO';
 
 class NewsService with ChangeNotifier {
   String country = 'us';

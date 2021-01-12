@@ -1,6 +1,12 @@
 # newsapp
 
 A new Flutter project.
+Un pequeña muestra de un lector de noticias usando el API https://newsapi.org/
+Generar vuestra propia API KEY, y colocarla en news_service.dart.
+
+final _apikey = 'TODO';
+
+El original de Fernando: https://github.com/Klerith/news-flutter
 
 ## Getting Started
 

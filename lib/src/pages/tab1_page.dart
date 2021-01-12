@@ -44,30 +44,32 @@ class __ListaSourcesState extends State<_ListaSources> {
   @override
   Widget build(BuildContext context) {
     final sourceList = Provider.of<NewsService>(context).sourceList;
-    return Container(
-      height: 90.0,
-      width: double.infinity,
-      child: ListView.builder(
-        physics: BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        itemCount: sourceList.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.all(8),
-            child: Column(
-              children: [
-                _sourceButton(sourceList[index]),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  sourceList[index].name,
-                  softWrap: false,
-                )
-              ],
-            ),
-          );
-        },
+    return SafeArea(
+      child: Container(
+        height: 90.0,
+        width: double.infinity,
+        child: ListView.builder(
+          physics: BouncingScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          itemCount: sourceList.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                children: [
+                  _sourceButton(sourceList[index]),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    sourceList[index].name,
+                    softWrap: false,
+                  )
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
